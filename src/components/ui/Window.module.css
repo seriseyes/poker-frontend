@@ -1,0 +1,93 @@
+/**
+ * Баярхүү.Лув, 0000.00.00 00:00
+ */
+
+:root {
+    --shadow-2: rgba(0, 0, 0, 0.2);
+    --shadow-1: rgba(0, 0, 0, 0.1);
+    --shadow-inset: rgba(255, 255, 255, 0.5);
+}
+
+.modal {
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background-color: rgba(255, 255, 255, 0.7);
+
+    z-index: 1000;
+}
+
+.window {
+    display: flex;
+    box-sizing: border-box;
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 12px 28px 0 var(--shadow-2), 0 2px 4px 0 var(--shadow-1), inset 0 0 0 1px var(--shadow-inset);
+    overflow-y: auto;
+    z-index: 1001;
+    max-width: 98%;
+    max-height: 98%;
+}
+
+h2 {
+    font-size: 1.1rem;
+    font-family: "Roboto Light", sans-serif;
+    margin: 0;
+    padding-left: 36px;
+}
+
+.closeIcon {
+    background-color: #E4E6EB;
+    color: #757B83;
+    border-radius: 100%;
+    font-size: 1.5rem;
+    padding: 6px;
+    cursor: pointer;
+    min-width: 24px;
+    min-height: 24px;
+}
+
+.closeIcon:hover {
+    background-color: rgba(228, 230, 235, 0.7);
+}
+
+.modalHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #E5E5E5;
+    padding: 10px;
+    box-sizing: border-box;
+}
+
+.shaker {
+    animation: shake 0.82s cubic-bezier(.36,.07,.19,.97) both;
+    transform: translate3d(0, 0, 0);
+    backface-visibility: hidden;
+    perspective: 1000px;
+}
+
+@keyframes shake {
+    10%, 90% {
+        transform: translate3d(-1px, 0, 0);
+    }
+
+    20%, 80% {
+        transform: translate3d(2px, 0, 0);
+    }
+
+    30%, 50%, 70% {
+        transform: translate3d(-4px, 0, 0);
+    }
+
+    40%, 60% {
+        transform: translate3d(4px, 0, 0);
+    }
+}

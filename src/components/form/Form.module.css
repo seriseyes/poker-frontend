@@ -1,0 +1,50 @@
+.tfWrap {
+    display: flex;
+    flex-direction: column;
+
+    gap: 5px;
+}
+
+.tfWrap:hover > .tf {
+    background-color: var(--secondary-color-hover);
+}
+
+.tfWrap:hover > .tfCaption {
+    color: var(--caption-color-hover);
+}
+
+.tfWrap:hover > .tfDescription {
+    opacity: 1;
+}
+
+.tf {
+    padding: 10px;
+    color: var(--text-color);
+    font-size: 16px;
+    font-weight: 500;
+    border: none;
+    background-color: var(--secondary-color);
+    border-radius: 6px;
+    transition: background-color 0.3s;
+    outline-color: var(--primary);
+}
+
+.tfCaption {
+    color: var(--caption-color);
+    font-weight: 500;
+    font-size: 15px;
+    transition: color 0.3s;
+}
+
+.tfDescription {
+    font-size: 14px;
+    color: var(--caption-color);
+    opacity: 0.85;
+    transition: opacity 0.3s;
+}
+
+.tfRequired::after {
+    content: "•";
+    padding-left: 5px;
+    color: var(--danger);
+}
