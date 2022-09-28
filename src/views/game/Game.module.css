@@ -1,0 +1,58 @@
+.table {
+    margin-top: 20px;
+    width: 900px;
+    height: 500px;
+
+    border: 3px solid darkgreen;
+    border-radius: 40%;
+}
+
+.player {
+    color: white;
+    background-color: black;
+    padding: 4px;
+    border-radius: 4px;
+    max-width: 120px;
+    font-weight: bold;
+    font-size: 1.2rem;
+}
+
+.pos0 {
+
+}
+
+.pos1 {
+
+}
+
+.pos2 {
+
+}
+
+.pos3 {
+
+}
+
+.pos4 {
+
+}
+
+.pos5 {
+
+}
+
+.pos6 {
+
+}
+
+.pos7 {
+
+}
+
+.pos8 {
+
+}
+
+.pos9 {
+
+}

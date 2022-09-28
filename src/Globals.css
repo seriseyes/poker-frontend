@@ -69,3 +69,26 @@ code {
 .primaryBg {
     background-color: var(--primary);
 }
+
+.rdt_Table {
+    background-color: transparent !important;
+}
+
+.rdt_TableRow {
+    background-color: transparent !important;
+}
+
+.rdt_TableCell {
+    background-color: transparent !important;
+    color: darkred;
+    font-weight: bold;
+    font-size: 1.1rem;
+    text-shadow: 0px 0px black;
+}
+
+.rdt_TableHeadRow {
+    background-color: black !important;
+    color: white;
+    font-size: 1.4rem;
+    font-weight: bold;
+}

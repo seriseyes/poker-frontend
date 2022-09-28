@@ -6,16 +6,20 @@ import Table from "../table/Table";
 import Navbar from "./components/Navbar";
 import sit from "../../assets/images/sit.jpg";
 import Account from "../account/Account";
+import Game from "../game/Game";
 
 export default function App() {
-    return <div>
+    return <div style={{width: "100%", height: "100%"}}>
         <img className={css.image} src={sit} alt="GOT sit"/>
         <Navbar/>
-        <Routes>
-            <Route path="/home" element={<Home/>}/>
-            <Route path="/table" element={<Table/>}/>
-            <Route path="/account" element={<Account/>}/>
-            <Route path="/remain" element={<Account/>}/>
-        </Routes>
+        <div style={{position: "fixed", top: 0, left: "180px", right: 0}}>
+            <Routes>
+                <Route path="/home" element={<Home/>}/>
+                <Route path="/table" element={<Table/>}/>
+                <Route path="/account" element={<Account/>}/>
+                <Route path="/remain" element={<Account/>}/>
+                <Route path="/game/:tableId/:roomId" element={<Game/>}/>
+            </Routes>
+        </div>
     </div>;
 }
