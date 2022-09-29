@@ -10,13 +10,20 @@ import useCookie from "../../hooks/useCookie";
 
 export default function Game() {
     const params = useParams();
+    const me = useCookie("token");
     const [room, setRoom] = useState<RoomProps>();
     const [loading, setLoading] = useState(false);
-    const [socket, setSocket] = useState<any>();
 
     useEffect(() => {
         const socket = io();
-        setSocket(socket);
+
+        socket.on("join", (data: RoomProps) => setRoom(data));
+        socket.on("leave", (data: RoomProps) => setRoom(data));
+
+        if (me) {
+            socket.emit("create", {id: params.roomId});
+            socket.emit("join", {id: me, room: params.roomId});
+        }
 
         void async function () {
             setLoading(true);
@@ -25,48 +32,19 @@ export default function Game() {
             setLoading(false);
         }();
 
-    }, []);
+        return () => {
+            socket.off("join");
+            socket.emit("leave", {id: me, room: params.roomId});
+        }
+
+    }, [me]);
 
     return <Column style={{marginTop: "10px"}}>
         <span style={{color: "white"}}>Тоглогчид:</span>
         <div className={css.table}>
-            {socket && <Players socket={socket} room={params.roomId!} players={room?.players?.map((el, i) => ({
-                id: el._id || i + "-player",
-                name: el.username,
-                position: i
-            }))}/>}
+            {room?.players?.map((player, index) => <div key={index} className={`${css["pos" + index]} ${css.player}`}>{player.username}</div>)}
         </div>
 
         <Loading isLoading={loading} isFull={true}/>
     </Column>;
-}
-
-interface PlayersProps {
-    players?: PlayerProps[];
-    socket: any;
-    room: string;
-}
-
-interface PlayerProps {
-    id: string;
-    name: string;
-    position: number;
-}
-
-function Players(props: PlayersProps) {
-    const me = useCookie("token");
-
-    useEffect(() => {
-        if (me) {
-            props.socket.emit("create", {id: props.room});
-            props.socket.emit("join", {id: me, room: props.room});
-        }
-    }, [me]);
-
-    return <>
-        {props.players?.map((player, i) => <Column key={player.id}
-                                                   className={`${css["pos" + player.position]} ${css.player}`}>
-            {player.name}
-        </Column>)}
-    </>
 }
