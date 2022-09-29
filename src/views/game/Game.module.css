@@ -17,42 +17,21 @@
     font-size: 1.2rem;
 }
 
-.pos0 {
-
+.btn {
+    background-color: darkgreen;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    padding: 10px;
+    font-size: 1.2rem;
+    font-weight: bold;
+    cursor: pointer;
 }
 
-.pos1 {
-
+.btn:hover {
+    opacity: 0.7;
 }
 
-.pos2 {
-
-}
-
-.pos3 {
-
-}
-
-.pos4 {
-
-}
-
-.pos5 {
-
-}
-
-.pos6 {
-
-}
-
-.pos7 {
-
-}
-
-.pos8 {
-
-}
-
-.pos9 {
-
+.start {
+    border: 1px solid white;
 }

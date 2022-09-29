@@ -1,6 +1,6 @@
 import image from "../../assets/images/got.jpg";
 import css from "./Menu.module.css";
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import Window from "../../components/ui/Window";
 import Login from "../auth/Login";
 import Register from "../auth/Register";
@@ -10,6 +10,12 @@ export default function Menu() {
         register: false,
         login: false,
     });
+
+    useEffect(() => {
+        document.cookie.split(";").forEach(function (c) {
+            document.cookie = c.replace(/^ +/, "").replace(/=.*/, "=;expires=" + new Date().toUTCString() + ";path=/");
+        });
+    }, []);
 
     return <div style={{width: "100%", height: "calc(100% - 4px)", boxSizing: "border-box"}}>
         <img className={css.image} src={image} alt="got"/>

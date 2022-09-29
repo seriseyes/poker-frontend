@@ -64,8 +64,10 @@ export default function Table() {
 export interface RoomProps {
     _id: string;
     code: string;
-    players?: [Auth];
+    players?: [{ player: Auth, cards: [] }];
     table: TableProps;
+    started: boolean;
+    cards?: string[];
 }
 
 function ChooseRoom(props: { table: TableProps }) {
@@ -112,7 +114,14 @@ function ChooseRoom(props: { table: TableProps }) {
             </div>}
             onRowClicked={(row: RoomProps) => onClick(row._id)}
         />
-        <button style={{padding: "4px 0", cursor: "pointer", display: "flex", justifyContent: "center", alignItems: "center", gap: "8px"}} onClick={() => onClick()}>
+        <button style={{
+            padding: "4px 0",
+            cursor: "pointer",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            gap: "8px"
+        }} onClick={() => onClick()}>
             <BiAddToQueue style={{fontSize: "1.1rem"}}/>
             Шинээр өрөө үүсгэх
         </button>
