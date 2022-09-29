@@ -10,6 +10,7 @@ import Window from "../../components/ui/Window";
 import {Auth} from "../auth/model/Auth";
 import {createRoom, findAllRoomByTableId} from "./service/RoomDAO";
 import Loading from "../../components/ui/Loading";
+import {BiAddToQueue} from "react-icons/bi";
 
 export interface TableProps {
     _id: string;
@@ -99,7 +100,7 @@ function ChooseRoom(props: { table: TableProps }) {
         }();
     }, []);
 
-    return <div>
+    return <Column style={{gap: "10px"}}>
         <DataTable
             columns={columns}
             data={rooms}
@@ -108,10 +109,13 @@ function ChooseRoom(props: { table: TableProps }) {
             pointerOnHover={true}
             noDataComponent={<div>
                 <h4>Таны сонгосон ширээнд өрөө олдсонгүй</h4>
-                <button onClick={() => onClick()}>Шинээр өрөө үүсгэх</button>
             </div>}
             onRowClicked={(row: RoomProps) => onClick(row._id)}
         />
+        <button style={{padding: "4px 0", cursor: "pointer", display: "flex", justifyContent: "center", alignItems: "center", gap: "8px"}} onClick={() => onClick()}>
+            <BiAddToQueue style={{fontSize: "1.1rem"}}/>
+            Шинээр өрөө үүсгэх
+        </button>
         <Loading isLoading={loading} isFull={true}/>
-    </div>;
+    </Column>;
 }
