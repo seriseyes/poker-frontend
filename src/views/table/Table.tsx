@@ -13,7 +13,7 @@ import Loading from "../../components/ui/Loading";
 import {BiAddToQueue} from "react-icons/bi";
 
 export interface TableProps {
-    _id: string;
+    _id?: string;
     type: string;
     big: number;
     small: number;
@@ -81,7 +81,7 @@ function ChooseRoom(props: { table: TableProps }) {
 
     const onClick = async (roomId?: string) => {
         if (!roomId) {
-            const result = await createRoom(props.table._id);
+            const result = await createRoom(props.table._id!);
             if (result) roomId = result;
         }
 
@@ -96,7 +96,7 @@ function ChooseRoom(props: { table: TableProps }) {
     useEffect(() => {
         void async function () {
             setLoading(true);
-            const result = await findAllRoomByTableId(props.table._id);
+            const result = await findAllRoomByTableId(props.table._id!);
             if (result) setRooms(result);
             setLoading(false);
         }();

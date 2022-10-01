@@ -4,4 +4,6 @@ export interface Auth {
     password: string;
     cards?: string[];
     chips?: number;
+    phone?: number;
+    ban?: boolean;
 }

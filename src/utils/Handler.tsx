@@ -20,7 +20,7 @@ export function handler(err: AxiosError) {
     if (err.response.status === 401) {
         toast.error(<div>
             Хандалтын хугацаа дууссан байна.
-            <Link to={"/auth"}> Энд дарж дахин нэвтэрнэ үү</Link>
+            <Link to={"/"}> Энд дарж дахин нэвтэрнэ үү</Link>
         </div>, {autoClose: 5000});
         return;
     }

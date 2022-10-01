@@ -40,3 +40,12 @@ export const startRoom = async (id: string) => {
         handler(e as AxiosError);
     }
 }
+
+export const findCalculatedRoomById = async (id: string) => {
+    try {
+        const res = await axios.get<RoomProps>("/room/calculated?id=" + id);
+        return res.data;
+    } catch (e) {
+        handler(e as AxiosError);
+    }
+}

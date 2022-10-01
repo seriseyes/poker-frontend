@@ -7,6 +7,7 @@ import Navbar from "./components/Navbar";
 import sit from "../../assets/images/sit.jpg";
 import Account from "../account/Account";
 import Game from "../game/Game";
+import Admin from "../admin/Admin";
 
 export default function App() {
     return <div style={{width: "100%", height: "100%"}}>
@@ -19,6 +20,7 @@ export default function App() {
                 <Route path="/account" element={<Account/>}/>
                 <Route path="/remain" element={<Account/>}/>
                 <Route path="/game/:tableId/:roomId" element={<Game/>}/>
+                <Route path="/admin" element={<Admin/>}/>
             </Routes>
         </div>
     </div>;
