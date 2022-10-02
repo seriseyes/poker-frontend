@@ -1,0 +1,14 @@
+.sender {
+    color: white;
+    font-weight: bold;
+}
+
+.message {
+    color: white;
+}
+
+.wrap {
+    height: 175px;
+    width: 245px;
+    overflow: auto;
+}

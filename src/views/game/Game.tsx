@@ -10,6 +10,7 @@ import useCookie from "../../hooks/useCookie";
 import Row from "../../components/layout/Row";
 import Player from "./Player";
 import {toast} from "react-toastify";
+import Chat from "../chat/Chat";
 
 export default function Game() {
     const params = useParams();
@@ -83,6 +84,8 @@ export default function Game() {
             {room?.started || me == null || !me.includes(!room ? "" : !room.players ? "" : room.players[0].player.username) ? null :
                 <button disabled={room?.started} onClick={start} className={`${css.btn} ${css.start}`}>Эхлэх</button>}
         </Row>
+
+        {socket && me ? <Chat me={me} socket={socket} room={params.roomId!}/> : null}
 
         <Loading isLoading={loading} isFull={true}/>
     </Column>;
