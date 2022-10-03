@@ -1,12 +1,22 @@
 .wrap {
     align-items: center;
     width: 140px;
-    height: 135px;
 
     color: white;
     background-color: black;
     border-radius: 8px;
-    border: 1px solid white;
+}
+
+.ind {
+    align-items: center;
+    justify-content: center;
+    background-color: darkred;
+    color: white;
+    padding: 2px;
+    border-radius: 50%;
+    width: 15px;
+    height: 15px;
+    font-size: 0.7rem;
 }
 
 .pos0 {

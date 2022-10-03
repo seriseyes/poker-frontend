@@ -64,10 +64,21 @@ export default function Table() {
 export interface RoomProps {
     _id: string;
     code: string;
-    players?: [{ player: Auth, cards: [] }];
+    players?: [
+        {
+            player: Auth,
+            cards: [],
+            bet: number,
+            big: boolean,
+            small: boolean,
+            status: string;
+        }];
     table: TableProps;
     started: boolean;
     cards?: string[];
+    call?: number;
+    pot?: number;
+    current: string;
 }
 
 function ChooseRoom(props: { table: TableProps }) {
