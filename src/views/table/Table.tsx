@@ -79,6 +79,7 @@ export interface RoomProps {
     call?: number;
     pot?: number;
     current: string;
+    winner?: string;
 }
 
 function ChooseRoom(props: { table: TableProps }) {

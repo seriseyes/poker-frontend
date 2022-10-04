@@ -27,7 +27,7 @@ export default function Player(props: PlayerProps) {
         </div>
         <Row>
             {props.cards.map((card, index) => {
-                return <img key={index} src={require(`../../assets/cards/${card}.png`)} alt={"Playing card " + card}/>
+                return <img key={index} src={require(`../../assets/card/${card}.png`)} alt={"Playing card " + card}/>
             })}
         </Row>
         <Row style={{gap: "8px"}}>

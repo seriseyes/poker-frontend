@@ -1,4 +1,4 @@
-import {useParams} from "react-router-dom";
+import {useNavigate, useParams} from "react-router-dom";
 import css from "./Game.module.css";
 import Column from "../../components/layout/Column";
 import {useEffect, useState} from "react";
@@ -14,6 +14,7 @@ import TextField from "../../components/form/TextField";
 import Chat from "../chat/Chat";
 
 export default function Game() {
+    const navigate = useNavigate();
     const params = useParams();
     const me = useCookie("username");
     const [room, setRoom] = useState<RoomProps>();
@@ -29,36 +30,55 @@ export default function Game() {
             socket.on("check_room", async (data) => {
                 setLoading(true);
                 if (data.message === "success") {
-                    const result = await findCalculatedRoomById(params.roomId!);
+                    const result = await findCalculatedRoomById(data.newRoom ? data.newRoom : params.roomId!);
                     if (result) {
                         if (result.started && !result.players?.some(el => el.player.username === me)) {
                             toast.info("Тоглолт эхэлсэн байна. Та зөвхөн үзэх боломжтой.")
                         }
                         setRoom(result);
+                        if (result.players && !result.started && result.players.length > 1 && result.players[0].player.username === me) {
+                            toast.info("Тоглолт эхэлж байна...", {autoClose: 5000});
+                            setTimeout(() => {
+                                setLoading(true);
+                                socket.emit("check_room", {user: me, room: params.roomId, started: true});
+                                setLoading(false);
+                            }, 5000);
+
+                        }
+                        if (result.winner && data.show !== 'no') {
+                            toast.info(result.winner + " хожлоо. Pot: " + result.pot,
+                                {autoClose: 5000});
+                            toast.info("5 секундын дараа дараагийн тоглолт эхэлнэ.",
+                                {
+                                    position: "bottom-center",
+                                    autoClose: 5000,
+                                    hideProgressBar: false,
+                                    closeOnClick: false,
+                                    pauseOnHover: false,
+                                    draggable: true,
+                                    progress: undefined,
+                                });
+                            setTimeout(() => {
+                                navigate(`/app/moving/${result.winner}/${params.tableId}/${params.roomId}`);
+                            }, 5000);
+                        }
                     }
                 }
                 setLoading(false);
             });
+
             socket.emit("join_room", {room: params.roomId});
             socket.emit("check_room", {user: me, room: params.roomId});
 
             return () => {
                 if (me && socket) {
                     socket.emit("leave", {user: me, room: params.roomId});
-                    socket.disconnect();
                     socket.off("check_room");
+                    socket.disconnect();
                 }
             }
         }
     }, [me]);
-
-    const start = async () => {
-        setLoading(true);
-        if (socket && me) {
-            socket.emit("check_room", {user: me, room: params.roomId, started: true});
-        }
-        setLoading(false);
-    }
 
     const action = async (name: string) => {
         if (name !== 'fold') {
@@ -99,7 +119,7 @@ export default function Game() {
                 <Column className={css.cardPos}>
                     <Row>
                         {room?.cards?.map((card, index) => {
-                            return <img key={index} src={require(`../../assets/cards/${card}.png`)}
+                            return <img key={index} src={require(`../../assets/card/${card}.png`)}
                                         alt={"Playing card " + card}/>
                         })}
                     </Row>
@@ -129,12 +149,9 @@ export default function Game() {
                 <button disabled={room?.current !== me} onClick={() => action("raise")} className={css.btn}>Raise
                 </button>
             </Row>
-            {room?.started || !me.includes(!room ? "" : !room.players ? "" : room.players[0].player.username) ? null :
-                <button disabled={room?.started} onClick={start} className={`${css.btn} ${css.start}`}>Эхлэх</button>}
         </Row>
 
         {socket && me ? <Chat me={me} socket={socket} room={params.roomId!}/> : null}
-
         <Loading isLoading={loading} isFull={true}/>
     </Column>;
 }

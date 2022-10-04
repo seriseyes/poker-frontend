@@ -12,6 +12,15 @@ export const createRoom = async (tableId: string) => {
     }
 }
 
+export const moveRoom = async (roomId: string) => {
+    try {
+        const res = await axios.get<string>("/room/move?roomId=" + roomId);
+        return res.data;
+    } catch (e) {
+        handler(e as AxiosError);
+    }
+}
+
 export const findAllRoomByTableId = async (tableId: string) => {
     try {
         const res = await axios.get<RoomProps[]>("/room/all/tableId?tableId=" + tableId);
