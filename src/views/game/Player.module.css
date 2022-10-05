@@ -58,3 +58,11 @@
 .pos9 {
     grid-area: 3 / 4 / 4 / 5;
 }
+
+@media (max-width: 930px) {
+    .wrap {
+        width: auto;
+        height: auto;
+        padding: 2px;
+    }
+}

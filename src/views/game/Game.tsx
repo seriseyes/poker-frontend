@@ -36,8 +36,10 @@ export default function Game() {
                             toast.info("Тоглолт эхэлсэн байна. Та зөвхөн үзэх боломжтой.")
                         }
                         setRoom(result);
-                        if (result.players && !result.started && result.players.length > 1 && result.players[0].player.username === me) {
+                        if (result.players && !result.started && result.players.length > 1) {
                             toast.info("Тоглолт эхэлж байна...", {autoClose: 5000});
+                        }
+                        if (result.players && !result.started && result.players.length > 1 && result.players[0].player.username === me) {
                             setTimeout(() => {
                                 setLoading(true);
                                 socket.emit("check_room", {user: me, room: params.roomId, started: true});
@@ -105,21 +107,13 @@ export default function Game() {
 
     if (!me) return <Loading isLoading={true} isFull={true}/>
 
-    return <Column
-        style={{marginTop: "10px", gap: "10px", alignItems: "center", justifyContent: "center", height: "100vh"}}>
-
-        <div style={{
-            border: "8px solid #984C4C",
-            width: "910px",
-            height: "510px",
-            borderRadius: "135px",
-            boxSizing: "border-box"
-        }}>
+    return <Column className={css.game}>
+        <div className={css.table}>
             <div className={css.grid}>
                 <Column className={css.cardPos}>
                     <Row>
                         {room?.cards?.map((card, index) => {
-                            return <img key={index} src={require(`../../assets/card/${card}.png`)}
+                            return <img className={css.cards} key={index} src={require(`../../assets/card/${card}.png`)}
                                         alt={"Playing card " + card}/>
                         })}
                     </Row>
@@ -141,11 +135,11 @@ export default function Game() {
             </div>
         </div>
 
-        <Row style={{gap: "15px"}}>
+        <Row style={{gap: "15px", flexWrap: "wrap"}}>
             <button disabled={room?.current !== me} onClick={() => action("fold")} className={css.btn}>Fold</button>
             <button disabled={room?.current !== me} onClick={() => action("call")} className={css.btn}>Call</button>
             <Row>
-                <TextField onChange={(e: any) => setRaise(e.target.value)} value={raise.toString()} type={"number"}/>
+                <TextField style={{width: "100px"}} onChange={(e: any) => setRaise(e.target.value)} value={raise.toString()} type={"number"}/>
                 <button disabled={room?.current !== me} onClick={() => action("raise")} className={css.btn}>Raise
                 </button>
             </Row>

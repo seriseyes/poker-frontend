@@ -1,8 +1,15 @@
 .nav {
+    display: flex;
+    gap: 5px;
+    align-items: center;
+
+    z-index: 3;
     position: fixed;
     top: 0;
     left: 0;
     box-sizing: border-box;
+    background-color: black;
+    border-radius: 10px;
 }
 
 ul {

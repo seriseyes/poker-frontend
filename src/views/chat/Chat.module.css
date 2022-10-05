@@ -12,3 +12,15 @@
     width: 245px;
     overflow: auto;
 }
+
+.col {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+}
+
+@media (max-width: 930px) {
+    .wrap {
+        height: 50px;
+    }
+}

@@ -2,7 +2,7 @@
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     grid-template-rows: repeat(3, 1fr);
-    grid-column-gap: 0;
+    grid-column-gap: 3px;
     grid-row-gap: 0;
 
     width: 100%;
@@ -18,8 +18,6 @@
     align-self: center;
     justify-self: center;
     gap: 5px;
-    height: 93px;
-    width: 345px;
     grid-area: 2 / 2 / 3 / 4;
     border: 3px solid #63C763;
     border-radius: 8px;
@@ -59,3 +57,47 @@
 .start {
     border: 1px solid white;
 }
+
+
+.table {
+    border: 8px solid #984C4C;
+    width: 910px;
+    height: 510px;
+    border-radius: 135px;
+    box-sizing: border-box;
+}
+
+.game {
+    position: fixed;
+    top: 0;
+    left: 0;
+    gap: 10px;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    width: 100%;
+}
+
+@media (max-width: 1320px) {
+    .game {
+        align-items: flex-end;
+    }
+}
+
+@media (max-width: 930px) {
+    .table {
+        margin-top: 20px;
+        height: 65vh;
+        width: 100vw;
+    }
+
+    .game {
+        justify-content: flex-start;
+    }
+
+    .cards {
+        height: 50px;
+    }
+}
+
+

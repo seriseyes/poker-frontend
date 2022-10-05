@@ -1,21 +1,23 @@
 import React, {useEffect, useState} from 'react';
 import css from './App.module.css';
-import {Route, Routes, useNavigate, useParams} from "react-router-dom";
+import {Route, Routes, useLocation, useNavigate, useParams} from "react-router-dom";
 import Home from "../home/Home";
 import Table from "../table/Table";
 import Navbar from "./components/Navbar";
 import sit from "../../assets/images/sit.jpg";
+import black from "../../assets/images/black.jpg";
+import admin from "../../assets/images/admin.jpg";
 import Account from "../account/Account";
 import Game from "../game/Game";
 import Admin from "../admin/Admin";
-import {createRoom, moveRoom} from "../table/service/RoomDAO";
+import {moveRoom} from "../table/service/RoomDAO";
 import Loading from "../../components/ui/Loading";
 import {io} from "socket.io-client";
 import useCookie from "../../hooks/useCookie";
 
 export default function App() {
+
     return <div style={{width: "100%", height: "100%"}}>
-        <img className={css.image} src={sit} alt="GOT sit"/>
         <Navbar/>
         <div style={{position: "fixed", top: 0, left: "180px", right: 0}}>
             <Routes>
@@ -28,7 +30,14 @@ export default function App() {
                 <Route path="/moving/:winner/:tableId/:roomId" element={<Moving/>}/>
             </Routes>
         </div>
+        <Background/>
     </div>;
+}
+
+function Background() {
+    const location = useLocation();
+
+    return <img className={css.image} src={location.pathname.includes("admin") ? admin : location.pathname.includes("game") ? black : sit} alt="GOT sit"/>
 }
 
 export function Moving() {
@@ -41,7 +50,7 @@ export function Moving() {
         if (me) {
             const socket = io();
 
-            socket.emit("join_room", {room: params.roomId});
+            socket.emit("join_room", {room: params.roomId + "1"});
 
             socket.on("move", data => {
                 if (data.message === 'success') {
@@ -49,16 +58,19 @@ export function Moving() {
                 }
             });
 
-            void async function () {
-                if (params.winner === me) {
-                    setLoading(true);
-                    const result = await moveRoom(params.roomId!);
-                    if (result) {
-                        socket.emit("move", {newRoom: result, room: params.roomId});
+            setTimeout(() => {
+                void async function () {
+                    if (params.winner === me) {
+                        setLoading(true);
+                        const result = await moveRoom(params.roomId!);
+                        if (result) {
+                            socket.emit("move", {newRoom: result, room: params.roomId + "1"});
+                        }
+                        setLoading(false);
                     }
-                    setLoading(false);
-                }
-            }();
+                }();
+            }, 2000);
+
 
             return () => {
                 if (me && socket) {
@@ -70,7 +82,7 @@ export function Moving() {
     }, [me]);
 
     return <h3 style={{color: "white"}}>
-        Түр хүлээнэ үү. Дараагийн тоглолтын үүсгэж байна...
+        Түр хүлээнэ үү. Дараагийн тоглолтыг үүсгэж байна...
         <Loading isLoading={loading} isFull={true}/>
     </h3>
 }

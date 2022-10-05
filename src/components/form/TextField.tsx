@@ -13,10 +13,11 @@ interface Props {
     placeholder?: string;
     maxLength?: number;
     onSubmit?: () => void;
+    style?: React.CSSProperties;
 }
 
 export default function TextField(props: Props) {
-    return <div style={props.inline ? {flexDirection: "row", alignItems: "center"} : undefined} className={css.tfWrap}>
+    return <div style={props.inline ? {...props.style, flexDirection: "row", alignItems: "center"} : {...props.style}} className={css.tfWrap}>
         {props.caption || props.required ? <label
             className={`${css.tfCaption} ${props.required ? css.tfRequired : ""}`}>{props.caption || ""}</label> : null}
         <input maxLength={props.maxLength}

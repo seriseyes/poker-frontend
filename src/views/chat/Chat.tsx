@@ -41,7 +41,7 @@ export default function Chat(props: ChatProps) {
         }
     }
 
-    return <Column style={{position: "fixed", bottom: "0", left: "0"}}>
+    return <Column className={css.col}>
         <ScrollToBottom className={css.wrap}>
             {
                 chats.map((el, i) => <Row key={i + "chat"} style={{gap: "5px"}}>
