@@ -37,7 +37,7 @@ export default function Game() {
                         }
                         setRoom(result);
                         if (result.players && !result.started && result.players.length > 1) {
-                            toast.info("Тоглолт эхэлж байна...", {autoClose: 5000});
+                            toast.info("Тоглолт эхэлж байна...", {autoClose: 5000, toastId: "st"});
                         }
                         if (result.players && !result.started && result.players.length > 1 && result.players[0].player.username === me) {
                             setTimeout(() => {

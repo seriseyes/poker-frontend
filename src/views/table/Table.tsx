@@ -63,7 +63,6 @@ export default function Table() {
 
 export interface RoomProps {
     _id: string;
-    code: string;
     players?: [
         {
             player: Auth,
@@ -85,7 +84,6 @@ export interface RoomProps {
 function ChooseRoom(props: { table: TableProps }) {
     const [rooms, setRooms] = useState<RoomProps[]>([]);
     const columns: TableColumn<RoomProps>[] = [
-        {name: 'Код', selector: row => row.code,},
         {name: 'Тоглогч', selector: row => `${row.players?.length}/10`,},
     ];
     const navigate = useNavigate();
