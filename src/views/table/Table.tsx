@@ -41,10 +41,10 @@ export default function Table() {
 
     return (
         <Column style={{width: "100%"}}>
-            <Row style={{gap: "5px"}}>
+            {/*<Row style={{gap: "5px"}}>
                 <button onClick={() => filter("Texas")} className={css.btn}>Texas</button>
                 <button onClick={() => filter("Omaha")} className={css.btn}>Omaha</button>
-            </Row>
+            </Row>*/}
             <DataTable
                 columns={columns}
                 data={tables}

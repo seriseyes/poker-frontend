@@ -18,8 +18,7 @@ interface PlayerProps {
 export default function Player(props: PlayerProps) {
 
     return <Column
-        style={{border: `2px solid ${props.status === 'inactive' ? 'red' : props.current ? "yellow" : "white"}`}}
-        className={`${css["pos" + props.order]} ${css.wrap}`}>
+        className={`${css["pos" + props.order]} ${css.wrap} ${props.status === 'inactive' ? css.inactive : props.current ? css.toggle : ''}`}>
         <div>
             {props.name}
         </div>

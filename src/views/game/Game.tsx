@@ -4,7 +4,7 @@ import Column from "../../components/layout/Column";
 import {useEffect, useState} from "react";
 import {io} from "socket.io-client";
 import {RoomProps} from "../table/Table";
-import {findCalculatedRoomById} from "../table/service/RoomDAO";
+import {createRoom, findCalculatedRoomById} from "../table/service/RoomDAO";
 import Loading from "../../components/ui/Loading";
 import useCookie from "../../hooks/useCookie";
 import Row from "../../components/layout/Row";
@@ -60,13 +60,21 @@ export default function Game() {
                                     draggable: true,
                                     progress: undefined,
                                 });
-                            setTimeout(() => {
-                                navigate(`/app/moving/${result.winner}/${params.tableId}/${params.roomId}`);
-                            }, 5000);
+
+                            if (result.winner === me) {
+                                setTimeout(async () => {
+                                    const newRoom = await createRoom(params.tableId!);
+                                    socket.emit("move", {oldRoom: params.roomId, room: newRoom});
+                                }, 5000);
+                            }
                         }
                     }
                 }
                 setLoading(false);
+            });
+
+            socket.on("move", async (data) => {
+                navigate(`/app/game/${params.tableId}/${data.room}`);
             });
 
             socket.emit("join_room", {room: params.roomId});
@@ -80,7 +88,7 @@ export default function Game() {
                 }
             }
         }
-    }, [me]);
+    }, [me, params]);
 
     const action = async (name: string) => {
         if (name !== 'fold') {
@@ -108,38 +116,39 @@ export default function Game() {
     if (!me) return <Loading isLoading={true} isFull={true}/>
 
     return <Column className={css.game}>
-        <div className={css.table}>
-            <div className={css.grid}>
-                <Column className={css.cardPos}>
-                    <Row>
-                        {room?.cards?.map((card, index) => {
-                            return <img className={css.cards} key={index} src={require(`../../assets/card/${card}.png`)}
-                                        alt={"Playing card " + card}/>
-                        })}
-                    </Row>
-                    {room?.pot ? <div style={{alignSelf: "center"}}>Pot: {room?.pot}</div> : null}
-                </Column>
+        <div className={css.grid}>
+            <Column className={css.cardPos}>
+                <Row>
+                    {room?.cards?.map((card, index) => {
+                        return <img className={css.cards} key={index} src={require(`../../assets/card/${card}.png`)}
+                                    alt={"Playing card " + card}/>
+                    })}
+                </Row>
+                {room?.pot ? <div style={{alignSelf: "center"}}>Pot: {room?.pot}</div> : null}
+            </Column>
 
-                {room?.players?.map((player, index) =>
-                    <Player key={index}
-                            cards={player.cards || []}
-                            chips={player.player.chips || 0}
-                            name={player.player.username}
-                            order={index}
-                            current={player.player.username === room?.current}
-                            big={player.big}
-                            small={player.small}
-                            status={player.status}
-                            bet={player.bet}
-                    />)}
-            </div>
+            {room?.players?.map((player, index) =>
+                <Player key={index}
+                        cards={player.cards || []}
+                        chips={player.player.chips || 0}
+                        name={player.player.username}
+                        order={index}
+                        current={player.player.username === room?.current}
+                        big={player.big}
+                        small={player.small}
+                        status={player.status}
+                        bet={player.bet}
+                />)}
         </div>
 
-        <Row style={{gap: "15px", flexWrap: "wrap"}}>
+        <Row style={{flexWrap: "wrap", alignItems: "center"}}>
+            <Interval room={room} action={action}/>
             <button disabled={room?.current !== me} onClick={() => action("fold")} className={css.btn}>Fold</button>
             <button disabled={room?.current !== me} onClick={() => action("call")} className={css.btn}>Call</button>
+            <button disabled={room?.current !== me} onClick={() => action("check")} className={css.btn}>Check</button>
             <Row>
-                <TextField style={{width: "100px"}} onChange={(e: any) => setRaise(e.target.value)} value={raise.toString()} type={"number"}/>
+                <TextField style={{width: "100px"}} onChange={(e: any) => setRaise(e.target.value)}
+                           value={raise.toString()} type={"number"}/>
                 <button disabled={room?.current !== me} onClick={() => action("raise")} className={css.btn}>Raise
                 </button>
             </Row>
@@ -148,4 +157,24 @@ export default function Game() {
         {socket && me ? <Chat me={me} socket={socket} room={params.roomId!}/> : null}
         <Loading isLoading={loading} isFull={true}/>
     </Column>;
+}
+
+function Interval({action, room}: { action: (name: string) => void, room?: RoomProps }) {
+    const [second, setSecond] = useState(15);
+
+    useEffect(() => {
+        setSecond(15);
+        let interval: NodeJS.Timer;
+        interval = setInterval(() => {
+            setSecond(second => {
+                if (second < 2) action("fold");
+                return second - 1
+            });
+        }, 1000);
+        return () => {
+            if (interval) clearInterval(interval);
+        }
+    }, [room]);
+
+    return <div style={{color: "white", marginRight: "5px"}}>{second}</div>
 }
