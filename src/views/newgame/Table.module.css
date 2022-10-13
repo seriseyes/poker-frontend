@@ -58,6 +58,6 @@
 
 @media (max-width: 650px) {
     .grid {
-        border-radius: 80px;
+        max-height: 70%;
     }
 }
