@@ -24,11 +24,11 @@ export default function Navbar() {
         {isDesktop || state ? <>
             <ul>
 
-                {location.pathname.includes("game") ? <li><Link to={"/app/table"}>Өрөөнөөс гарах</Link></li>
+                {location.pathname.includes("game") ? <li><Link to={"/app/home"}>Өрөөнөөс гарах</Link></li>
                     :
                     <>
                         {role === 'admin' ? <li><Link to={"/app/admin"}>Админ</Link></li> : null}
-                        {/*<li><Link to={"/app/home"}>Ранк харах</Link></li>*/}
+                        <li><Link to={"/app/home"}>Ранк харах</Link></li>
                         <li><Link to={"/app/table"}>Ширээнд суух</Link></li>
                         <li><Link to={"/app/account"}>Данс</Link></li>
                         <li><Link to={"/"}>Гарах</Link></li>

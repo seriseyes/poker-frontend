@@ -1,10 +1,10 @@
 .wrap {
     align-items: center;
-    justify-content: center;
+    width: 140px;
 
     color: white;
+    background-color: black;
     border-radius: 8px;
-    border: 1px solid red;
 }
 
 .ind {
@@ -17,26 +17,6 @@
     width: 15px;
     height: 15px;
     font-size: 0.7rem;
-}
-
-.inactive {
-    border: 2px solid red;
-}
-
-.toggle {
-    border-radius: 6px;
-    padding: 4px;
-    border: 2px solid white;
-    animation: switch-animation 1.5s infinite linear;
-}
-
-@keyframes switch-animation {
-    0%,50% {
-        border-color: white;
-    }
-    50.1%,100% {
-        border-color: transparent;
-    }
 }
 
 .pos0 {

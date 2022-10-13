@@ -15,10 +15,11 @@ interface PlayerProps {
     bet: number;
 }
 
-export default function Player(props: PlayerProps) {
+export default function PlayerOld(props: PlayerProps) {
 
     return <Column
-        className={`${css["pos" + props.order]} ${css.wrap} ${props.status === 'inactive' ? css.inactive : props.current ? css.toggle : ''}`}>
+        style={{border: `2px solid ${props.status === 'inactive' ? 'red' : props.current ? "yellow" : "white"}`}}
+        className={`${css["pos" + props.order]} ${css.wrap}`}>
         <div>
             {props.name}
         </div>

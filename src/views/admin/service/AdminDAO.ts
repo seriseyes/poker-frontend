@@ -1,7 +1,7 @@
 import axios from "../../../utils/AxiosInstance";
 import {handler} from "../../../utils/Handler";
 import {AxiosError} from "axios";
-import {TableProps} from "../../table/Table";
+import {TableProps} from "../../table/TableChoose";
 
 export const createTable = async (model: TableProps) => {
     try {

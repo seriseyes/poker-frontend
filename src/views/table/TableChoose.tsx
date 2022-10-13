@@ -19,7 +19,7 @@ export interface TableProps {
     small: number;
 }
 
-export default function Table() {
+export default function TableChoose() {
     const columns: TableColumn<TableProps>[] = [
         {name: 'Ширээ', selector: row => row.type,},
         {name: 'Big', selector: row => row.big,},
@@ -41,10 +41,10 @@ export default function Table() {
 
     return (
         <Column style={{width: "100%"}}>
-            {/*<Row style={{gap: "5px"}}>
+            <Row style={{gap: "5px"}}>
                 <button onClick={() => filter("Texas")} className={css.btn}>Texas</button>
                 <button onClick={() => filter("Omaha")} className={css.btn}>Omaha</button>
-            </Row>*/}
+            </Row>
             <DataTable
                 columns={columns}
                 data={tables}
@@ -84,7 +84,7 @@ export interface RoomProps {
 function ChooseRoom(props: { table: TableProps }) {
     const [rooms, setRooms] = useState<RoomProps[]>([]);
     const columns: TableColumn<RoomProps>[] = [
-        {name: 'Тоглогч', selector: row => `${row.players?.length}/10`,},
+        {name: 'Тоглогч', selector: row => `${row.players?.filter(f => f.status !== 'exit').length}/10`,},
     ];
     const navigate = useNavigate();
     const [loading, setLoading] = useState(false);
@@ -100,7 +100,7 @@ function ChooseRoom(props: { table: TableProps }) {
             return;
         }
 
-        navigate(`/app/game/${props.table?._id}/${roomId}`);
+        navigate(`/app/game/${props.table?._id}/${roomId}/1`);
     };
 
     useEffect(() => {

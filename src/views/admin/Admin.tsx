@@ -2,7 +2,7 @@ import Column from "../../components/layout/Column";
 import Window from "../../components/ui/Window";
 import Loading from "../../components/ui/Loading";
 import React, {useEffect, useState} from "react";
-import {TableProps} from "../table/Table";
+import {TableProps} from "../table/TableChoose";
 import TextField from "../../components/form/TextField";
 import SelectField from "../../components/form/SelectField";
 import {createTable} from "./service/AdminDAO";

@@ -1,7 +1,8 @@
 import axios from "../../../utils/AxiosInstance";
 import {handler} from "../../../utils/Handler";
 import {AxiosError} from "axios";
-import {RoomProps} from "../Table";
+import {RoomProps} from "../TableChoose";
+import {RoomModel} from "../../newgame/models/GameModels";
 
 export const createRoom = async (tableId: string) => {
     try {
@@ -33,13 +34,21 @@ export const findAllRoomByTableId = async (tableId: string) => {
 
 export const findRoomById = async (id: string) => {
     try {
-        const res = await axios.get<RoomProps>("/room/id?id=" + id);
+        const res = await axios.get<RoomModel>("/room/id?id=" + id);
         return res.data;
     } catch (e) {
         handler(e as AxiosError);
     }
 }
 
+export const findMyCards = async (roomId: string, playerId: string) => {
+    try {
+        const res = await axios.get<string[]>("/room/cards?id=" + roomId + "&playerId=" + playerId);
+        return res.data;
+    } catch (e) {
+        handler(e as AxiosError);
+    }
+}
 
 export const startRoom = async (id: string) => {
     try {

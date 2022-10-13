@@ -1,0 +1,25 @@
+.btnActionWrap {
+    gap: 8px;
+    height: 25px;
+}
+
+.btnActionWrap input {
+    width: 100px;
+    height: 100%;
+    padding: 0;
+    box-sizing: border-box;
+    border: none;
+}
+
+.btnActionWrap button {
+    font-weight: bold;
+    padding: 0 4px;
+    cursor: pointer;
+    box-shadow: none;
+    border: none;
+    height: 100%;
+}
+
+.btnAction {
+
+}
