@@ -62,4 +62,8 @@
         border-radius: 150px;
         width: calc(100% - 30px);
     }
+
+    .wrap {
+        top: 10px;
+    }
 }
