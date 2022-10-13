@@ -28,7 +28,7 @@ export default function Navbar() {
                     :
                     <>
                         {role === 'admin' ? <li><Link to={"/app/admin"}>Админ</Link></li> : null}
-                        <li><Link to={"/app/home"}>Ранк харах</Link></li>
+                        {/*<li><Link to={"/app/home"}>Ранк харах</Link></li>*/}
                         <li><Link to={"/app/table"}>Ширээнд суух</Link></li>
                         <li><Link to={"/app/account"}>Данс</Link></li>
                         <li><Link to={"/"}>Гарах</Link></li>
