@@ -18,6 +18,7 @@ export interface ChipRequest {
     accepted?: Auth,
     amount: number,
     status: string
+    type: string;
 }
 
 export default function Admin() {
@@ -49,6 +50,7 @@ export default function Admin() {
 
     const chipColumns: TableColumn<ChipRequest>[] = [
         {name: 'Хүсэлт гаргасан', selector: row => row.user?.username,},
+        {name: 'Төрөл', selector: row => row.type === 'in' ? "Орлого" : 'Зарлага',},
         {
             name: 'Баталгаажуулсан хэрэглэгч',
             selector: row => !row.accepted ? "Баталгаажуулаагүй" : row.accepted?.username,
@@ -114,7 +116,7 @@ export default function Admin() {
         <Column style={{alignSelf: "flex-end", gap: "5px"}}>
             <button onClick={() => setOpen(true)} className={"button"}>Ширээ үүсгэх</button>
             <button onClick={fetchUsers} className={"button"}>Тоглогчдийн жагсаалт</button>
-            <button onClick={fetchChips} className={"button"}>Цэнэглэлт баталгаажуулалт</button>
+            <button onClick={fetchChips} className={"button"}>Орлого, зарлага баталгаажуулалт</button>
         </Column>
 
         <Window open={open} onClose={() => setOpen(false)}>
@@ -155,7 +157,6 @@ function TableRegister({onClose}: { onClose?: () => void }) {
     const [loading, setLoading] = useState(false);
     const types = [
         {value: "Texas", label: "Texas"},
-        {value: "Omaha", label: "Omaha"},
     ];
 
     const onSubmit = async () => {

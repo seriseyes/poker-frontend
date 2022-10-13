@@ -3,9 +3,9 @@ import {handler} from "../../../utils/Handler";
 import {AxiosError} from "axios";
 import {ChipRequest} from "../../admin/Admin";
 
-export const createChipRequest = async (amount: string) => {
+export const createChipRequest = async (amount: string, type: string) => {
     try {
-        const res = await axios.get<string>("/chip/create?amount=" + amount);
+        const res = await axios.get<string>("/chip/create?amount=" + amount + "&type=" + type);
         return res.data;
     } catch (e) {
         handler(e as AxiosError);
@@ -21,7 +21,7 @@ export const findAllChipRequestByStatus = async (status: string) => {
     }
 }
 
-export const confirmChipRequest = async (id: string) => {
+export const confirmChipRequest = async (id: string,) => {
     try {
         const res = await axios.get<string>("/chip/confirm?id=" + id);
         return res.data;

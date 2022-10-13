@@ -13,6 +13,8 @@ export default function Account() {
     const [state, setState] = useState<Auth>();
     const [loading, setLoading] = useState(false);
     const [open, setOpen] = useState(false);
+    const [showOut, setShowOut] = useState(false);
+    const [outAmount, setOutAmount] = useState("0");
 
     useEffect(() => {
         setLoading(true);
@@ -23,6 +25,14 @@ export default function Account() {
         }();
     }, []);
 
+    const out = async () => {
+        if (outAmount === "0") return;
+        const result = await createChipRequest(outAmount, "out");
+        if (result) {
+            toast.success(result);
+            setShowOut(false);
+        }
+    }
 
     return <Column style={{gap: "8px"}}>
         <h1 style={{color: "white"}}>Данс</h1>
@@ -36,6 +46,14 @@ export default function Account() {
                 цэнэглэх
                 хүсэлт илгээх
             </button>
+            <button onClick={() => setShowOut(true)} style={{padding: "4px", width: "200px", cursor: "pointer"}}>
+                Зарлага
+            </button>
+            {showOut && <Row style={{alignItems: "flex-end"}}>
+                <TextField type={"number"} onSubmit={out} onChange={(e: any) => setOutAmount(e.target.value)}
+                           style={{width: "200px"}} captionStyle={{color: "white"}} caption={"Зарлага гаргах дүн"}/>
+                <button onClick={out} style={{height: "40px"}}>Хүсэлт илгээх</button>
+            </Row>}
         </>}
         <Loading isLoading={loading}/>
 
@@ -52,7 +70,7 @@ function ChipRequest({onClose}: { onClose?: () => void }) {
     const requestChips = async () => {
         setLoading(true);
 
-        const result = await createChipRequest(amount);
+        const result = await createChipRequest(amount, "in");
         if (result) {
             toast.success(result);
             if (onClose) onClose();
@@ -63,7 +81,8 @@ function ChipRequest({onClose}: { onClose?: () => void }) {
 
     return <Column style={{gap: "10px"}}>
         <strong>Мөнгөө уг дансруу хийнэ үү</strong>
-        <strong>Данс: 454545</strong>
+        <strong>Данс: 5026651505</strong>
+        <strong>Нэр: Baasanchuluun</strong>
         <TextField onSubmit={requestChips} onChange={(e) => setAmount(e.target.value)} value={amount}
                    caption={"Авах chip-ны хэмжээ"} type={"number"}/>
         <button onClick={requestChips} style={{padding: "4px", cursor: "pointer"}}>{<Loading

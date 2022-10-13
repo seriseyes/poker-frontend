@@ -11,6 +11,7 @@ import Player from "./Player";
 import {createRoom, findRoomById} from "../table/service/RoomDAO";
 import Row from "../../components/layout/Row";
 import Column from "../../components/layout/Column";
+import Chat from "../chat/Chat";
 
 export default function Table() {
     const params = useParams();
@@ -119,6 +120,8 @@ export default function Table() {
         <Action player={room.players.filter(f => f.player.username === username)[0].player} token={token}
                 room={room}
                 socket={socket}/>
+
+        <Chat socket={socket} room={room._id} me={username}/>
         <Loading isLoading={loading} isFull={true}/>
     </div>
 }
