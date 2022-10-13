@@ -24,7 +24,7 @@ export default function Navbar() {
         {isDesktop || state ? <>
             <ul>
 
-                {location.pathname.includes("game") ? <li><Link to={"/app/home"}>Өрөөнөөс гарах</Link></li>
+                {location.pathname.includes("game") ? <li><Link to={"/app/table"}>Өрөөнөөс гарах</Link></li>
                     :
                     <>
                         {role === 'admin' ? <li><Link to={"/app/admin"}>Админ</Link></li> : null}

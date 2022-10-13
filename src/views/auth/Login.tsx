@@ -26,7 +26,7 @@ export default function Login() {
         if (token) {
             toast.success("Амжилттай нэвтэрлээ");
             document.title = "GOT poker - " + state.username;
-            navigate("/app/home");
+            navigate("/app/table");
         }
         setLoading(false);
     };

@@ -32,7 +32,6 @@ export default function Table() {
                 setLoading(false);
                 if (result) {
                     setRoom(result);
-                    console.log(data, result);
                     if (data.started && !result.started) {
                         toast.info("Тоглолт эхэлж байна...", {
                             autoClose: 3000,
@@ -53,12 +52,14 @@ export default function Table() {
                     autoClose: 4000,
                     pauseOnFocusLoss: false,
                     pauseOnHover: false,
+                    toastId: "win"
                 });
                 toast.info("Дараагийн тоглолт эхэлж байна...", {
                     autoClose: 4000,
                     pauseOnFocusLoss: false,
                     pauseOnHover: false,
-                    position: "bottom-center"
+                    position: "bottom-center",
+                    toastId: "next"
                 });
                 if (data.winner === username) {
                     const newRoom = await createRoom(params.tableId!);
@@ -70,10 +71,10 @@ export default function Table() {
             });
             socket.on("move", (data: any) => {
                 setTimeout(() => {
-                    navigate(`/app/game/${params.tableId}/${data.room}/${params.roomId}`);
+                    navigate(`/app/moving/${params.tableId}/${data.room}`);
                 }, 4000);
             });
-            socket.emit("join", {token, room: params.roomId});
+            socket.emit("join", {token, room: params.roomId, round: params.round});
 
             return () => {
                 if (token && socket && username) {
