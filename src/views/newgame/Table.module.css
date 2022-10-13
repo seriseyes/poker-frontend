@@ -59,5 +59,7 @@
 @media (max-width: 650px) {
     .grid {
         max-height: 70%;
+        border-radius: 150px;
+        width: calc(100% - 30px);
     }
 }
